@@ -1,1209 +1,2001 @@
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style type="text/css">
-	@import url("https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
-	@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
-	@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Rubik:400,500,700');
-/* 
-font-family: 'Rubik', sans-serif;
-font-family: 'Roboto Slab', serif;
-*/
-/* reset */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        
+        /* Custom CSS */
+        :root {
+            --primary-color: #2D3B55;
+            --accent-color: #FF6B6B;
+            --gradient-1: linear-gradient(45deg, #2D3B55, #4A90E2);
+            --gradient-2: linear-gradient(135deg, #FF6B6B, #FFE66D);
+        }
 
-*
-{
-	border: 0;
-	box-sizing: content-box;
-	color: inherit;
-	font-family: inherit;
-	font-size: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-	line-height: 1.1 !important;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-	vertical-align: top;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
 
-/* content editable */
+        /* AI Theme Header */
+        .ai-header {
+            background: var(--gradient-1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
 
-*[contenteditable] { border-radius: 0.25em; min-width: 1em; outline: 0; }
+        .ai-header .navbar-brand {
+            color: white;
+            font-weight: bold;
+        }
 
-*[contenteditable] { cursor: pointer; }
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-1);
+            min-height: 100vh;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
 
-*[contenteditable]:hover, *[contenteditable]:focus, td:hover *[contenteditable], td:focus *[contenteditable], img.hover { background: #DEF; box-shadow: 0 0 1em 0.5em #DEF; }
+        .hero-content {
+            color: white;
+            padding: 180px 0;
+        }
 
-span[contenteditable] { display: inline-block; }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
 
-/* heading */
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
 
-h1 { font-family: 'Rubik', sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
 
-/* table */
+        /* Pricing Plans */
+        .pricing-section {
+            padding: 100px 0;
+            background: #f8f9fa;
+        }
 
-table { font-size: 75%; table-layout: fixed; width: 100%; }
-table { border-collapse: separate; border-spacing: 2px; }
-th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
-th, td { border-radius: 0.25em; border-style: solid; }
-th { background: #EEE; border-color: #BBB; }
-td { border-color: #DDD; }
+        .price-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
 
-/* page */
+        .price-card:hover {
+            transform: translateY(-10px);
+        }
 
-html { font: 17px/1 'Rubik', sans-serif; overflow: auto; padding: 0.5in; }
-html { background: #999; cursor: default; }
+        .price-card.featured {
+            border: 2px solid var(--accent-color);
+        }
 
-body { box-sizing: border-box; min-height: 11in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
-body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
+        /* Custom Configuration */
+        .custom-config {
+            padding: 100px 0;
+            background: white;
+        }
 
-/* header */
+        .config-calculator {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+        }
 
-header { margin: 0 0 3em; }
-header:after { clear: both; content: ""; display: table; }
+        /* FAQs Section */
+        .faq-section {
+            padding: 100px 0;
+            background: #f8f9fa;
+        }
 
-header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 1em; padding: 0.5em 0; }
-header address { float: left; font-size: 75%; font-style: normal; line-height: 1.25; margin: 0 1em 1em 0; }
-header address p { margin: 0 0 0.25em; }
-header span, header img { display: block; float: right; }
-header span { margin: 0 0 1em 1em; max-height: 25%; max-width: 60%; position: relative; }
-header img { max-height: 100%; max-width: 100%; }
-header input { cursor: pointer; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; height: 100%; left: 0; opacity: 0; position: absolute; top: 0; width: 100%; }
+        .accordion-item {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-/* article */
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 50px 0;
+        }
 
-article, article address, table.meta, table.inventory { margin: 0 0 3em; }
-article:after { clear: both; content: ""; display: table; }
-article h1 { clip: rect(0 0 0 0); position: absolute; }
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
 
-article address { float: left; font-size: 100%; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-/* table meta & balance */
+        /* Black Friday Badge */
+        .black-friday-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transform: rotate(15deg);
+            animation: pulse 2s infinite;
+        }
 
-table.meta, table.balance { float: right; width: 36%; }
-table.meta:after, table.balance:after { clear: both; content: ""; display: table; }
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(15deg); }
+            50% { transform: scale(1.1) rotate(15deg); }
+            100% { transform: scale(1) rotate(15deg); }
+        }
 
-/* table meta */
+        
+        .custom-config {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .config-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        
+        .config-item h4 {
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .current-value {
+            background: #f0f4f8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            color: #2D3B55;
+        }
+        
+        /* Slider Styling */
+        .slider-container {
+            position: relative;
+            padding: 10px 0;
+        }
+        
+        .slider-track {
+            position: relative;
+            width: 100%;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+        }
+        
+        .custom-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #1a73e8;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 0 1px #1a73e8;
+        }
+        
+        .custom-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #1a73e8;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 0 1px #1a73e8;
+        }
+        
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        /* Price Panel Styling */
+        .price-panel {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        
+        .price-header {
+            background: #1a73e8;
+            color: white;
+            padding: 20px;
+        }
+        
+        .price-header h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .price-content {
+            padding: 20px;
+        }
+        
+        .price-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .price-item .price {
+            font-weight: 500;
+        }
+        
+        .discount-badge {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            color: #2e7d32;
+        }
+        
+        .total-price {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px dashed #dee2e6;
+            border-radius: 10px;
+        }
+        
+        .total-amount {
+            font-size: 24px;
+            color: #1a73e8;
+            font-weight: 600;
+        }
+        
+        .order-btn {
+            width: 100%;
+            padding: 15px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .order-btn:hover {
+            background: #1557b0;
+        }
+        
+        /* Custom Track Fill Effect */
+        .slider-track::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            background: #1a73e8;
+            border-radius: 2px;
+            left: 0;
+            width: var(--track-fill, 50%);
+        }
 
-table.meta th { width: 40%; }
-table.meta td { width: 60%; }
-
-/* table items */
-
-table.inventory { clear: both; width: 100%; }
-table.inventory th { font-weight: 500; text-align: center; }
-
-table.inventory td:nth-child(1) { width: 26%; }
-table.inventory td:nth-child(2) { width: 38%; }
-table.inventory td:nth-child(3) { text-align: right; width: 12%; }
-table.inventory td:nth-child(4) { text-align: right; width: 12%; }
-table.inventory td:nth-child(5) { text-align: right; width: 12%; }
-
-/* table balance */
-
-table.balance th, table.balance td { width: 50%; }
-table.balance td { text-align: right; }
-
-/* aside */
-
-aside h1 { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
-aside h1 { border-color: #999; border-bottom-style: solid; }
-
-/* javascript */
-
-.add, .cut
-{
-	border-width: 1px;
-	display: block;
-	font-size: .8rem;
-	padding: 0.25em 0.5em;	
-	float: left;
-	text-align: center;
-	width: 0.6em;
-}
-
-.add, .cut
-{
-	background-position: 0% 0%;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-	border-radius: 0.5em;
-	border-color: #0076A3;
-	color: #FFF;
-	cursor: pointer;
-	font-weight: bold;
-	background-image: -webkit-linear-gradient(#00ADEE 5%, #0078A5 100%);
-	background-color: #9AF;
-	background-repeat: repeat;
-	background-attachment: scroll;
-}
-
-.add { margin: -2.5em 0 0; }
-
-.add:hover { background: #00ADEE; }
-
-.cut { opacity: 0; position: absolute; top: 0; left: -1.5em; }
-.cut { -webkit-transition: opacity 100ms ease-in; }
-
-tr:hover .cut { opacity: 1; }
-
-@media print {
-	* { -webkit-print-color-adjust: exact; }
-	html { background: none; padding: 0; }
-	body { box-shadow: none; margin: 0; }
-	span:empty { display: none; }
-	.add, .cut { display: none; }
-  	.central_btn{
-	display: none;
-}
-
-}
-
-@page { margin: 0; }
-.central_btn{
-	text-align:center;
-}
-.central_btn button {
-        position: relative;
-    margin-top: 80px;
-    font-size: 13px;
-    padding: 10px 25px;
-    border-radius: 3px;
-    color: #000;
-    border: 2px solid #e1e1e1;
-    outline: none;
-    font-family: calibri;
-    font-weight: 400;
-    letter-spacing: 1px;
-    background: #fff;
-    margin-bottom: 40px;
-}
-input#datepicker {
-    width: 100%;
-}
-section.signature p {
-    font-size: 13px;
-    font-family: 'Roboto Slab', serif;
-    letter-spacing: 1px;
-    line-height: 1.4 !important;
-}
-/*  */
-.ui-datepicker .ui-datepicker-title span.ui-datepicker-month {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-}
-.ui-datepicker .ui-datepicker-title span.ui-datepicker-year {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-}
-th .ui-datepicker-week-end {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-    padding-top: 12px;
-}
-.ui-datepicker table th {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-}
-.ui-datepicker td {
-    font-size: 13px;
-    font-family: 'Rubik', sans-serif;
-}
-.ui-datepicker td a.ui-state-default.ui-state-highlight.ui-state-active {
-    background: #ffffff;
-    color: #3F51B5;
-    border: 1px solid #3F51B5;
-    text-align: center;
-}
-.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
-    position: absolute;
-    top: -4px;
-    width: 1.8em;
-    height: 1.8em;
-}
-.ui-datepicker table thead tr th:nth-child(2) {
-    background: #F44336;
-    color: #fff;
-}
-.ui-datepicker th {
-    padding: 5px;
-    text-align: center;
-    font-weight: bold;
-    border: 0;
-    border-radius: 0;
-}
-.ui-datepicker table tbody tr td:nth-child(2) a.ui-state-default {
-    border: 1px solid #f44336;
-    text-align: center;
-    background: #f44336;
-    color: #fff;
-}
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-    border: 1px solid #00BCD4;
-    background: #00BCD4 50% 50% repeat-x;
-    font-weight: normal;
-    color: #ffffff;
-    text-align: center;
-}
-.ui-datepicker table th {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 400;
-    font-size: 13px;
-    background: #3c3c3c;
-    color: #fff;
-    border-right: 2px solid #fff;
-}
-.ui-datepicker .ui-datepicker-header {
+.floating-server {
     position: relative;
-    padding: .2em 0;
-    border: none;
-    background: none;
+    animation: float 6s ease-in-out infinite;
 }
-.ui-datepicker table tbody tr a.ui-state-default.ui-state-active {
-    background: #fff !important;
-    color: #00bcd4 !important;
+
+.server-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4), transparent 70%);
+    filter: blur(20px);
+    z-index: -1;
 }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-    border: none;
-    background: none;
-    font-weight: normal;
-    color: #FFC107;
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
 }
-</style>
+
+.particles-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: particleFloat 15s infinite linear;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+    }
+}
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.icon-pulse {
+    animation: iconPulse 2s infinite;
+}
+
+@keyframes iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.feature-card {
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    background: white;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+    transform: translateX(-100%);
+}
+
+.feature-card:hover::before {
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
+.price-card {
+    animation: cardAppear 0.5s ease-out;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.price-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(26,115,232,0.1), transparent 70%);
+    animation: highlightPulse 2s infinite;
+}
+
+@keyframes highlightPulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1a73e8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.pattern-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: 
+        linear-gradient(30deg, #1a73e8 12%, transparent 12.5%, transparent 87%, #1a73e8 87.5%, #1a73e8),
+        linear-gradient(150deg, #1a73e8 12%, transparent 12.5%, transparent 87%, #1a73e8 87.5%, #1a73e8),
+        linear-gradient(30deg, #1a73e8 12%, transparent 12.5%, transparent 87%, #1a73e8 87.5%, #1a73e8),
+        linear-gradient(150deg, #1a73e8 12%, transparent 12.5%, transparent 87%, #1a73e8 87.5%, #1a73e8),
+        linear-gradient(60deg, #99a1f7 25%, transparent 25.5%, transparent 75%, #99a1f7 75%, #99a1f7),
+        linear-gradient(60deg, #99a1f7 25%, transparent 25.5%, transparent 75%, #99a1f7 75%, #99a1f7);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+.gradient-background {
+    background: linear-gradient(135deg, #1a73e8, #34A853);
+}
+
+.notification-badge {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-badge::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 10px;
+    height: 10px;
+    background: #EA4335;
+    border-radius: 50%;
+    animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Hero Section Styles */
+.hero {
+    background: linear-gradient(135deg, #1a1f2f 0%, #2D3B55 100%);
+    min-height: 100vh;
+    padding: 100px 0;
+    position: relative;
+}
+
+/* Gradient Background Animation */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.gradient-orbs {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(26,115,232,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(52,168,83,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(251,188,5,0.1) 0%, transparent 50%);
+    animation: gradientMove 20s ease infinite;
+    opacity: 0.5;
+}
+
+/* Floating Elements */
+.tech-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+
+/* Text Styles */
+.text-gradient {
+    background: linear-gradient(135deg, #1a73e8, #34A853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Server Rack Animation */
+.server-unit {
+    transition: transform 0.3s ease;
+}
+
+.server-unit:hover {
+    transform: translateX(10px);
+}
+
+.data-particle {
+    opacity: 0.6;
+    filter: url(#glow);
+}
+
+/* Trust Indicators */
+.trust-indicators {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 2rem;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.trust-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a73e8;
+}
+
+/* Animations */
+@keyframes gradientMove {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-30%, -30%); }
+    100% { transform: translate(0, 0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .hero-illustration {
+        margin-top: 3rem;
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .hero {
+        padding: 60px 0;
+    }
+    
+    .trust-indicators {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+/* Typing Animation Styles */
+.typing-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.typing-text {
+    color: #1a73e8;
+    font-weight: 600;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    margin-left: 2px;
+    animation: blink 0.7s infinite;
+    color: #1a73e8;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+/* Add responsive breakpoints */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 0;
+    }
+    .price-card {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Fix layout issues */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Improve typography */
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Add smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none; /* This allows clicking through the particles */
+}
+
+/* Make sure content appears above particles */
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+.black-friday-banner {
+    text-align: center;
+    margin: 20px 15px 30px;
+}
+
+.sale-title {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.countdown-block {
+    background: rgba(13, 110, 253, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 65px;
+    text-align: center;
+}
+
+.countdown-number {
+    display: block;
+    font-size: 2rem;
+    color: #0d6efd;
+    line-height: 1;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.countdown-label {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 576px) {
+    .countdown-timer {
+        gap: 10px;
+        padding: 0 10px;
+    }
+    
+    .countdown-block {
+        min-width: 60px;
+        padding: 10px 8px;
+    }
+    
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+    
+    .countdown-label {
+        font-size: 10px;
+    }
+    
+    .sale-title {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+}
+
+
+/* Add these to your existing .feature-icon classes */
+
+.feature-icon.high-performance::before {
+    content: "\f201";  /* Chart Line icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.feature-icon.elite::before {
+    content: "\f666";  /* Star icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.feature-icon.ultimate::before {
+    content: "\f3fd";  /* Crown icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: rgba(66, 75, 93, 0.58);
+    font-size: 22px;
+    margin-right: 8px;
+}
+
+.new-price {
+    font-size: 35px;
+    font-weight: 600;
+    color: #073473;
+}
+
+.sale-banner {
+    width: 100%;
+    background: #1e3a8a;
+    padding: 12px 0;
+    text-align: center;
+    position: fixed;
+    z-index: 1001;
+}
+
+.ai-header {
+    margin-top: 100px;
+}
+
+.sale-banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.offer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.highlight {
+    background: rgba(251, 188, 5, 0.15);
+    color: #FBBC05;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 6px 15px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.plus {
+    color: #FBBC05;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.offer-detail {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .highlight {
+        font-size: 18px;
+        padding: 4px 10px;
+    }
+    
+    .plus {
+        font-size: 20px;
+    }
+    
+    .offer-detail {
+        font-size: 14px;
+        padding: 0 15px;
+    }
+}
+
+/* Add these CSS styles */
+.billing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.billing-option {
+    font-size: 14px;
+    color: #64748b;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.billing-option.active {
+    color: #1e3a8a;
+    font-weight: 500;
+}
+
+/* Toggle Switch Styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e2e8f0;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #1e3a8a;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+@media (max-width: 768px) {
+    .billing-toggle {
+        gap: 8px;
+    }
+    
+    .billing-option {
+        font-size: 13px;
+    }
+}
+
+    </style>
+    
+    <!-- CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add these in the head section -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Add preconnect for external resources -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
 </head>
 <body>
-		<header>
-			<h1> KGS Invoice </h1>
-			<address>
-        <p style="
-font-family: 'Roboto Slab', serif; font-size:20px;">KaisthaGroups</p>
-				<p>Nagrota Bagwan, Kangra<br>H.P.-176047</p>
-				<p>📞(+91) 787-682-1174</p>
-        		<p>📞(+91) 787-644-7553</p>
-			</address>
-			<span><img alt="" src="https://dummyimage.com/120x80/c1c1c1/000000.png&text=logo+here"><input type="file" accept="image/*"></span>
-		</header>
-		<article>
-			<h1>Recipient</h1>
-			<address contenteditable>
-				<p>Some Company<br>c/o Some Guy</p>
-			</address>
-			<table class="meta">
-				<tr>
-					<th><span contenteditable>Invoice #</span></th>
-					<td><span contenteditable>1001</span></td>
-				</tr>
-				<tr>
-					<th><span contenteditable>Date</span></th>
-					<td style="padding:3px 5px"><input type="text" id="datepicker" placeholder="Select Date"></td>
-				</tr>
-				<tr>
-					<th><span contenteditable>Amount Due</span></th>
-					<td><span id="prefix" contenteditable>&#8377;</span><span>600.00</span></td>
-				</tr>
-			</table>
-			<table class="inventory">
-				<thead>
-					<tr>
-						<th><span contenteditable>Item</span></th>
-						<th><span contenteditable>Description</span></th>
-						<th><span contenteditable>Rate</span></th>
-						<th><span contenteditable>Quantity</span></th>
-						<th><span contenteditable>Price</span></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><a class="cut">-</a><span contenteditable>Item name</span></td>
-						<td><span contenteditable>Description</span></td>
-						<td><span data-prefix>&#8377; </span> <span contenteditable>00.00</span></td>
-						<td><span contenteditable>0</span></td>
-						<td><span data-prefix>&#8377;</span> <span>00.00</span></td>
-					</tr>
-				</tbody>
-			</table>
-			<a class="add">+</a>
-<table class="balance">
-				<tr>
-					<th><span contenteditable>Total</span></th>
-					<td><span data-prefix>&#8377;</span> <span>000.00</span></td>
-				</tr>
-				<tr>
-					<th><span contenteditable>Amount Paid</span></th>
-					<td><span data-prefix>&#8377;</span> <span contenteditable>0.00</span></td>
-				</tr>
-				<tr>
-					<th><span>GST</span></th>
-					<td><span>18%</span></td>
-				</tr>
-				<tr>
-					<th><span contenteditable>Balance Due</span></th>
-					<td><span data-prefix>&#8377;</span> <span>000.00</span></td>
-				</tr>
-			</table>
-		</article>
-		<aside class="central_btn">
-			<button onclick="myFunction()" style="cursor:pointer"><i class="fa fa-print" aria-hidden="true"></i> Print Document</button> 
-<!--       <button id="cmd"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Save PDF</button> -->
-		</aside>
-<section class="signature">
-  <div>
-    <p>KGS INVOICE-Sugam Kaistha</p>
-    <p>Manager Sign <p>
-  </div>
-</section>
-<!-- Jquery -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-
-<script>
-function myFunction() {
-    window.print();
-}
-$(function() {
-    $("#datepicker" ).datepicker({
-        dateFormat: 'dd / mm / yy'	});
-
-  } );
-
-var date = new Date();
-
-var day = date.getDate();
-var month = date.getMonth() + 1;
-var year = date.getFullYear();
-
-if (month < 10) month = "0" + month;
-if (day < 10) day = "0" + day;
-
-var today = day + " / " + month + " / " + year;
-
-
-document.getElementById('datepicker').value = today;
-</script>
-<script type="text/javascript">
-	/* Shivving (IE8 is not supported, but at least it won't look as awful)
-/* ========================================================================== */
-
-(function (document) {
-	var
-	head = document.head = document.getElementsByTagName('head')[0] || document.documentElement,
-	elements = 'article aside audio bdi canvas data datalist details figcaption figure footer header hgroup mark meter nav output picture progress section summary time video x'.split(' '),
-	elementsLength = elements.length,
-	elementsIndex = 0,
-	element;
-
-	while (elementsIndex < elementsLength) {
-		element = document.createElement(elements[++elementsIndex]);
-	}
-
-	element.innerHTML = 'x<style>' +
-		'article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}' +
-		'audio[controls],canvas,video{display:inline-block}' +
-		'[hidden],audio{display:none}' +
-		'mark{background:#FF0;color:#000}' +
-	'</style>';
-
-	return head.insertBefore(element.lastChild, head.firstChild);
-})(document);
-
-/* Prototyping
-/* ========================================================================== */
-
-(function (window, ElementPrototype, ArrayPrototype, polyfill) {
-	function NodeList() { [polyfill] }
-	NodeList.prototype.length = ArrayPrototype.length;
-
-	ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
-	ElementPrototype.mozMatchesSelector ||
-	ElementPrototype.msMatchesSelector ||
-	ElementPrototype.oMatchesSelector ||
-	ElementPrototype.webkitMatchesSelector ||
-	function matchesSelector(selector) {
-		return ArrayPrototype.indexOf.call(this.parentNode.querySelectorAll(selector), this) > -1;
-	};
-
-	ElementPrototype.ancestorQuerySelectorAll = ElementPrototype.ancestorQuerySelectorAll ||
-	ElementPrototype.mozAncestorQuerySelectorAll ||
-	ElementPrototype.msAncestorQuerySelectorAll ||
-	ElementPrototype.oAncestorQuerySelectorAll ||
-	ElementPrototype.webkitAncestorQuerySelectorAll ||
-	function ancestorQuerySelectorAll(selector) {
-		for (var cite = this, newNodeList = new NodeList; cite = cite.parentElement;) {
-			if (cite.matchesSelector(selector)) ArrayPrototype.push.call(newNodeList, cite);
-		}
-
-		return newNodeList;
-	};
-
-	ElementPrototype.ancestorQuerySelector = ElementPrototype.ancestorQuerySelector ||
-	ElementPrototype.mozAncestorQuerySelector ||
-	ElementPrototype.msAncestorQuerySelector ||
-	ElementPrototype.oAncestorQuerySelector ||
-	ElementPrototype.webkitAncestorQuerySelector ||
-	function ancestorQuerySelector(selector) {
-		return this.ancestorQuerySelectorAll(selector)[0] || null;
-	};
-})(this, Element.prototype, Array.prototype);
-
-/* Helper Functions
-/* ========================================================================== */
-
-function generateTableRow() {
-	var emptyColumn = document.createElement('tr');
-
-	emptyColumn.innerHTML = '<td><a class="cut">-</a><span contenteditable></span></td>' +
-		'<td><span contenteditable></span></td>' +
-		'<td><span data-prefix>₹</span> <span contenteditable>0.00</span></td>' +
-		'<td><span contenteditable>0</span></td>' +
-		'<td><span data-prefix>₹</span> <span>0.00</span></td>';
-
-	return emptyColumn;
-}
-
-function parseFloatHTML(element) {
-	return parseFloat(element.innerHTML.replace(/[^\d\.\-]+/g, '')) || 0;
-}
-
-function parsePrice(number) {
-	return number.toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|₹ ))/g, '1,');
-}
-
-/* Update Number
-/* ========================================================================== */
-
-function updateNumber(e) {
-	var
-	activeElement = document.activeElement,
-	value = parseFloat(activeElement.innerHTML),
-	wasPrice = activeElement.innerHTML == parsePrice(parseFloatHTML(activeElement));
-
-	if (!isNaN(value) && (e.keyCode == 38 || e.keyCode == 40 || e.wheelDeltaY)) {
-		e.preventDefault();
-
-		value += e.keyCode == 38 ? 1 : e.keyCode == 40 ? -1 : Math.round(e.wheelDelta * 0.025);
-		value = Math.max(value, 0);
-
-		activeElement.innerHTML = wasPrice ? parsePrice(value) : value;
-	}
-
-	updateInvoice();
-}
-
-/* Update Invoice
-/* ========================================================================== */
-
-function updateInvoice() {
-	var total = 0;
-	var cells, price, total, a, i;
-
-	// update inventory cells
-	// ======================
-
-	for (var a = document.querySelectorAll('table.inventory tbody tr'), i = 0; a[i]; ++i) {
-		// get inventory row cells
-		cells = a[i].querySelectorAll('span:last-child');
-
-		// set price as cell[2] * cell[3]
-		price = parseFloatHTML(cells[2]) * parseFloatHTML(cells[3]);
-
-		// add price to total
-		total += price;
-
-		// set row total
-		cells[4].innerHTML = price;
-	}
-
-	// update balance cells
-	// ====================
-
-	// get balance cells
-	cells = document.querySelectorAll('table.balance td:last-child span:last-child');
-
-	// set total
-	cells[0].innerHTML = total;
-	
-	//GST
-	
-
-	// set balance and meta balance
-	cells[3].innerHTML = document.querySelector('table.meta tr:last-child td:last-child span:last-child').innerHTML = parsePrice(total+(total*0.18) - parseFloatHTML(cells[1]));
-
-	// update prefix formatting
-	// ========================
-
-	var prefix = document.querySelector('#prefix').innerHTML;
-	for (a = document.querySelectorAll('[data-prefix]'), i = 0; a[i]; ++i) a[i].innerHTML = prefix;
-
-	// update price formatting
-	// =======================
-
-	for (a = document.querySelectorAll('span[data-prefix] + span'), i = 0; a[i]; ++i) if (document.activeElement != a[i]) a[i].innerHTML = parsePrice(parseFloatHTML(a[i]));
-}
-
-/* On Content Load
-/* ========================================================================== */
-
-function onContentLoad() {
-	updateInvoice();
-
-	var
-	input = document.querySelector('input'),
-	image = document.querySelector('img');
-
-	function onClick(e) {
-		var element = e.target.querySelector('[contenteditable]'), row;
-
-		element && e.target != document.documentElement && e.target != document.body && element.focus();
-
-		if (e.target.matchesSelector('.add')) {
-			document.querySelector('table.inventory tbody').appendChild(generateTableRow());
-		}
-		else if (e.target.className == 'cut') {
-			row = e.target.ancestorQuerySelector('tr');
-
-			row.parentNode.removeChild(row);
-		}
-
-		updateInvoice();
-	}
-
-	function onEnterCancel(e) {
-		e.preventDefault();
-
-		image.classList.add('hover');
-	}
-
-	function onLeaveCancel(e) {
-		e.preventDefault();
-
-		image.classList.remove('hover');
-	}
-
-	function onFileInput(e) {
-		image.classList.remove('hover');
-
-		var
-		reader = new FileReader(),
-		files = e.dataTransfer ? e.dataTransfer.files : e.target.files,
-		i = 0;
-
-		reader.onload = onFileLoad;
-
-		while (files[i]) reader.readAsDataURL(files[i++]);
-	}
-
-	function onFileLoad(e) {
-		var data = e.target.result;
-
-		image.src = data;
-	}
-
-	if (window.addEventListener) {
-		document.addEventListener('click', onClick);
-
-		document.addEventListener('mousewheel', updateNumber);
-		document.addEventListener('keydown', updateNumber);
-
-		document.addEventListener('keydown', updateInvoice);
-		document.addEventListener('keyup', updateInvoice);
-
-		input.addEventListener('focus', onEnterCancel);
-		input.addEventListener('mouseover', onEnterCancel);
-		input.addEventListener('dragover', onEnterCancel);
-		input.addEventListener('dragenter', onEnterCancel);
-
-		input.addEventListener('blur', onLeaveCancel);
-		input.addEventListener('dragleave', onLeaveCancel);
-		input.addEventListener('mouseout', onLeaveCancel);
-
-		input.addEventListener('drop', onFileInput);
-		input.addEventListener('change', onFileInput);
-	}
-}
-
-window.addEventListener && document.addEventListener('DOMContentLoaded', onContentLoad);
-
-// ==============
-
-</script>
-<script type="text/javascript">
-	/*! signature-pad.js - 0.0.1 - 2014-10-13 - motdotla */
-var MicroEvent  = function(){};
-MicroEvent.prototype  = {
-  bind  : function(event, fct){
-    this._events = this._events || {};
-    this._events[event] = this._events[event] || [];
-    this._events[event].push(fct);
-  },
-  unbind  : function(event, fct){
-    this._events = this._events || {};
-    if( event in this._events === false  )  return;
-    this._events[event].splice(this._events[event].indexOf(fct), 1);
-  },
-  trigger : function(event /* , args... */){
-    this._events = this._events || {};
-    if( event in this._events === false  )  return;
-    for(var i = 0; i < this._events[event].length; i++){
-      this._events[event][i].apply(this, Array.prototype.slice.call(arguments, 1));
-    }
-  }
-};
-
-/**
- * mixin will delegate all MicroEvent.js function in the destination object
- *
- * - require('MicroEvent').mixin(Foobar) will make Foobar able to use MicroEvent
- *
- * @param {Object} the object which will support MicroEvent
-*/
-MicroEvent.mixin  = function(destObject){
-  var props = ['bind', 'unbind', 'trigger'];
-  for(var i = 0; i < props.length; i ++){
-    if( typeof destObject === 'function' ){
-      destObject.prototype[props[i]]  = MicroEvent.prototype[props[i]];
-    }else{
-      destObject[props[i]] = MicroEvent.prototype[props[i]];
-    }
-  }
-};
-
-// export in common js
-if( typeof module !== "undefined" && ('exports' in module)){
-  module.exports  = MicroEvent;
-}
-
-
-/*! signature-mark.js - 0.0.1 - 2014-10-12 - motdotla */
-(function(exports){
-  var SignatureMark = function(canvas) {
-    if(!(this instanceof SignatureMark)){
-      return new SignatureMark(canvas);
-    }
-
-    this.canvas = canvas;
-    this.init();
-
-    return this;
-  };
-
-  SignatureMark.prototype.init = function() {
-    this.initVariables();
-    this.initPainters();
-    this.initEvents();
-  };
-
-  exports.SignatureMark = SignatureMark;
-
-}(this));
-
-(function(SignatureMark){
-  SignatureMark.prototype.initEvents = function() {
-    var self = this;
-    self.canvas.addEventListener(self.mouse_down, function(e)     { self.onCanvasMouseDown(self, e); }, false);
-    self.canvas.addEventListener(self.mouse_move, function(e)     { self.onCanvasMouseMove(self, e); }, false);
-    self.canvas.addEventListener('contextmenu', function(e)       { self.preventRightClick(self, e); }, false);
-
-    document.addEventListener(self.mouse_up, function(e)          { self.onCanvasMouseUp(self, e); }, false);
-    self.canvas.addEventListener(self.mouse_up, function(e)       { self.onCanvasMouseUp(self, e); }, false);  
-  };
-
-  SignatureMark.prototype.preventRightClick = function(self, e) {
-    e.preventDefault();
-  };
-
-  SignatureMark.prototype.onCanvasMouseDown = function(self, e) {
-    e.preventDefault();
-    self.setCanvasOffset(self);
-    self.startDrawingStroke(self);
-    self.setMouseXAndMouseY(self, e);
-    self.setPainters(self);
-  };
-
-  SignatureMark.prototype.onCanvasMouseMove = function(self, e) {
-    e.preventDefault();
-    self.setMouseXAndMouseY(self, e);
-  };
-
-  SignatureMark.prototype.onCanvasMouseUp = function(self, e) {
-    self.stopDrawingStroke(self);
-  };
-
-  SignatureMark.prototype.setMouseXAndMouseY = function(self, event) {
-    if (!!self.touch_supported) {
-      target                 = event.touches[0];
-      self.mouseX            = target.pageX - self.canvasOffsetLeft;
-      self.mouseY            = target.pageY - self.canvasOffsetTop;
-    } else {
-      self.mouseX            = event.pageX - self.canvasOffsetLeft;
-      self.mouseY            = event.pageY - self.canvasOffsetTop;
-    }
-  };
-
-  SignatureMark.prototype.setCanvasOffset = function(self) {
-    canvasOffset              = self.Offset(self.canvas);
-    self.canvasOffsetLeft     = canvasOffset.left;
-    self.canvasOffsetTop      = canvasOffset.top;
-  };
-}(SignatureMark));
-
-(function(SignatureMark){
-  SignatureMark.prototype.Offset = function(element) {
-    if (element === undefined) return null;
-    var obj = element.getBoundingClientRect();
-    return {
-      left: obj.left + window.pageXOffset,
-      top: obj.top + window.pageYOffset
-    };
-  };
-}(SignatureMark));
-
-(function(SignatureMark){  
-  SignatureMark.prototype.initPainters = function() {
-    this.painters = [];
-    for(var i = 0; i < this.max_strokes; i++) {
-      var ease = Math.random() * 0.05 + this.easing;
-      this.painters.push({
-        dx : 0,
-        dy : 0,
-        ax : 0,
-        ay : 0,
-        div : 0.1,
-        ease : ease
-      });
-    }
-  };
-
-  SignatureMark.prototype.setPainters = function(self) {
-    for(var i = 0; i < self.painters.length; i++) {
-      pntr    = self.painters[i];
-      pntr.dx = self.mouseX;
-      pntr.dy = self.mouseY;
-    }
-  };
-}(SignatureMark));
-
-(function(SignatureMark){
-  SignatureMark.prototype.drawStroke = function(self) {
-    var i;
-    for(i = 0; i < self.painters.length; i++) {
-      self.context.beginPath();
-      
-      pntr = self.painters[i];
-      self.context.moveTo(pntr.dx, pntr.dy);
-      var dx1 = pntr.ax = (pntr.ax + (pntr.dx - self.mouseX) * pntr.div) * pntr.ease;
-      pntr.dx -= dx1;
-      var dx2 = pntr.dx;
-      var dy1 = pntr.ay = (pntr.ay + (pntr.dy - self.mouseY) * pntr.div) * pntr.ease;
-      pntr.dy -= dy1;
-      var dy2 = pntr.dy;
-      self.context.lineTo(dx2, dy2);
-      self.context.stroke();
-    }
-  };
-
-  SignatureMark.prototype.startDrawingStroke = function(self) {
-    var interval = setInterval(function() { self.drawStroke(self); }, self.refresh_rate);
-    self.strokeIntervals.push(interval);
-  };
-
-  SignatureMark.prototype.stopDrawingStroke = function(self) {
-    for(var i = 0; i < self.strokeIntervals.length; i++) {
-      clearInterval(self.strokeIntervals[i]);
-    }
-  };
-}(SignatureMark));
-
-(function(SignatureMark){
-  SignatureMark.prototype.initVariables = function() {
-    this.touch_supported      = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) ? true : false;
-    this.context              = this.canvas.getContext('2d');
-    this.color                = [0, 0, 0];
-    this.brush_pressure       = 0.5;
-    this.context.strokeStyle  = "rgba(" + this.color[0] + ", " + this.color[1] + ", " + this.color[2] + ", " + this.brush_pressure + ")";
-    this.context.lineWidth    = 2.5; // brush size
-    this.painters             = [];
-    this.mouseX               = 0;
-    this.mouseY               = 0;
-    this.strokeIntervals      = [];
-    this.refresh_rate         = 5;
-    this.max_strokes          = 12;
-    this.easing               = 0.7;
-    this.mouse_down           = "mousedown";
-    this.mouse_move           = "mousemove";
-    this.mouse_up             = "mouseup";
-
-    if (!!this.touch_supported) {
-      this.mouse_down         = "touchstart";
-      this.mouse_move         = "touchmove";
-      this.mouse_up           = "touchend";
-    } else {
-      this.refresh_rate       = 10;
-      this.max_strokes        = 100;
-    }
-  };
-
-}(SignatureMark));
-
-
-(function(exports){
-  var SignaturePad = function() {
-    if(!(this instanceof SignaturePad)){
-      return new SignaturePad();
-    }
-
-    this.uuid      = this.Uuid();
-    this.script    = this.CurrentlyExecutedScript();
-    this.init();
-
-    return this;
-  };
-
-  SignaturePad.prototype.init = function() {
-    if (this.script) {
-      this.script.className += " signature-pad-script";
-      this.script.id        = "signature-pad-script-"+this.uuid;
-
-      this.draw();
-      this.events();
-      SignatureMark(this.canvas);
-    } else {
-      console.error("Could not find script tag to initialize on.");
-    }
-  };
-
-  MicroEvent.mixin(SignaturePad);
-  exports.SignaturePad = SignaturePad;
-
-}(this));
-
-
-(function(SignaturePad){
-  var DEFAULT_SIGNATURE = "data:image/gif;base64,R0lGODlhRAIEAaIAAOLi1v7+5enp2ubm2Pf34e7u3QAAAAAAACH5BAAHAP8ALAAAAABEAgQBAAP/GLrc/jDKSau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/AAMKHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mix/6PHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CDCh1KtKjRo0iTKl3KtKnTp1CjSp1KtarVq1izat3KtavXr2DDih1LtqzZs2jTql3Ltq3bt3Djyp1Lt67du3jz6t3Lt6/fv4ADCx5MuLDhw4gTK17MuLHjx5AjS55MubLly5gza97MubPnz6BDix5NurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx9OvLjx48iTK1/OvLnz59CjS59Ovbr169g5CADAnUCE7QAEZE9DgDuAARAKmB+vZoB57w3Ud2dP3rx4BuXn009jHgD8AP/5AVDAfmrIF94C5g1IoBr9eQfefQumYWABBkbIRn/vWbgGeBlqqEaAAnq4BogKingGiNyZiAaG+qk4xoMBoueiGPLJ2OCMYBgIn4EQ4rhFgP8FcKOPWgRYogITEqlFgg/0pyQWD6bHZAMsYuhAlVZSieV6Wm4JwJVeftnllmB6WSaZY2J5ppppVrmmm22y+KaccWbJQJhi3hnmnHYiuGedTgLKpZ5mCpqioXn6WSihaDLKpqNwQkrnC1FGEKiklyraqKaPchqpp5OC2qcCePKZKal/YnqqkKmKumqpiJo6qKuzoroorYeqWiurt9q6qa+dAvupsKESOyqvvyIbrLKKwzJbLAsERDtBtNIaKmuuuCZq7KutbrsrrLpi6624zh4LbrbXalsut72u+2237pJ77rjqzhtvvfDaq2++/LZr75MAByzwwAQXbPDBCCes8MIMN+zwwxBHLPHEFFds8cUYZ6zxxhx37PHHIIcs8sgkl2zyySinrPLKLLfs8sswxyzzzDTXbPPNbiUAADs=";
-
-  SignaturePad.prototype.draw = function() {   
-    this._drawCss();
-    this._drawPad();
-    this._drawOverlay();
-    this._drawRotator();
-    this.setSize();
-  };
-
-  SignaturePad.prototype.setSize = function(e) {
-    if (this.StandardScreen()) {
-      this.wrapper.width        = 580;
-      this.wrapper.setAttribute("style","width:580px");
-      this.canvas.height        = 260;
-      this.canvas.width         = 580;
-    } else {
-      // set for iPhone
-      this.wrapper.style.width  = 446;
-      this.wrapper.setAttribute("style","width:446px");
-      this.wrapper.className    += " signature-iphone";
-      this.canvas.height        = 200;
-      this.canvas.width         = 446;
-    }
-  };
-
-  SignaturePad.prototype._drawPad = function() {
-    this.pad                          = document.createElement('div');
-    // this.pad.setAttribute("style", "display:none");
-    this.pad.className                = "signature-pad";
-    this.pad.id                       = "signature-pad-"+this.uuid;
-
-    this.pad_img                      = document.createElement('img');
-    this.pad_img.className            = "signature-pad-img";
-    this.pad_img.id                   = "signature-pad-img-"+this.uuid;
-    this.pad_img.src                  = DEFAULT_SIGNATURE;
-    this.pad.appendChild(this.pad_img);
+    <!-- Add this div at the beginning of your body tag -->
+<div id="particles-js" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1002;"></div>
+
+    <!-- Add to the body or main container -->
+<div class="pattern-background"></div>
+<!-- Add this right after opening <div class="main-container"> -->
+    <div class="sale-banner">
+        <div class="sale-banner-content">
+            <div class="offer-container">
+                <span class="highlight">FLAT 30% OFF</span>
+                <span class="plus">+</span>
+                <span class="highlight">6 Months Free</span>
+            </div>
+            <div class="offer-detail">on Any additional Server or Support Subscription / Renewal</div>
+        </div>
+    </div>
     
-    var pad_msg                       = document.createElement('div');
-    var text_click_sign               = document.createTextNode("Click to Sign");
-    var pad_msg_icon                  = document.createElement('span');
-    pad_msg_icon.setAttribute("data-icon", "A");
+    <!-- AI Theme Header -->
+    <header class="ai-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="https://sugamkgs.w3spaces.com/Virtual-System.html">
+                    <i class="fas fa-cloud"></i> Virtual Cloud OS - Beta
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pricing">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#custom">Power Cloud</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#faq">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    pad_msg.className                 = "signature-pad-msg";
-    pad_msg.id                        = "signature-pad-msg-"+this.uuid;
 
-    pad_msg.appendChild(text_click_sign);
-    pad_msg.appendChild(pad_msg_icon);
-    this.pad.appendChild(pad_msg);
+    <!-- Hero Section -->
+<!-- Hero Section with Modern Animation -->
+<section class="hero gradient-background position-relative overflow-hidden">
+    <!-- Gradient Background with Dynamic Effect -->
+    <div class="hero-background">
+        <div class="gradient-orbs"></div>
+    </div>
 
-    return this.InsertAfter(this.script, this.pad);
-  };
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="tech-particle" data-speed="1"></div>
+        <div class="tech-particle" data-speed="2"></div>
+        <div class="tech-particle" data-speed="1.5"></div>
+    </div>
 
-  SignaturePad.prototype._drawOverlay = function() {
-    this.overlay                    = document.createElement('div');
-    // this.overlay.setAttribute("style", "display:none");
-    this.overlay.className          = "signature-overlay";
-    this.overlay.id                 = "signature-overlay-"+this.uuid;
+    <div class="container position-relative">
+        <div class="row align-items-center min-vh-80">
+            <!-- Hero Content -->
+            <div class="col-lg-6">
+                <div class="hero-content" data-aos="fade-up">
+                    <h1 class="display-4 fw-bold mb-4">
+                        AI-Powered Sugam OS Cloud
+                        <span class="text-gradient">Cloud Operating System </span>
+                    </h1>
+                    <p class="lead mb-4">
+                        Experience lightning-fast performance with our cutting-edge OS cloud infrastructure
+                        <span class="typing-wrapper">
+                            <span class="typing-text"></span>
+                            <span class="cursor">|</span>
+                        </span>
+                    </p>
+                    <div class="hero-cta">
+                        <a href="https://sugam-kaistha-kgs.w3spaces.com/Nav-Ation-About.html" class="btn btn-primary btn-lg me-3">
+                            Starting for FREE Nav-Ation Beta
+<i class="fas fa-arrow-right ms-2"></i>
+                            
+                        </a>
+                        <br>
+                        <br>
+                        
+                        <!-- <a href="#demo" class="btn btn-outline-light btn-lg">
+                            Live Demo
+                            <i class="fas fa-play ms-2"></i>
+                        </a> -->
+                    </div>
+                    <!-- Trust Indicators -->
+                    <div class="trust-indicators mt-5">
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="trust-item">
+                                <div class="trust-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <span>99.9% Uptime</span>
+                            </div>
+                            <div class="trust-item">
+                                <div class="trust-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <span>Lightning Fast</span>
+                            </div>
+                            <div class="trust-item">
+                                <div class="trust-icon">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <span>24/7 Support</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    this.wrapper                    = document.createElement('div');
-    this.wrapper.className          = "signature-wrapper";
-    this.wrapper.id                 = "signature-wrapper-"+this.uuid;
-    this.overlay.appendChild(this.wrapper);
+            <!-- Hero Illustration -->
+            <div class="col-lg-6">
+                <div class="hero-illustration" data-aos="fade-left">
+                    <!-- Modern Isometric Server Illustration -->
+                    <svg class="server-rack" width="600" height="500" viewBox="0 0 600 500">
+                        <!-- Server Cabinet -->
+                        <g class="cabinet" transform="skewX(-30)">
+                            <!-- Cabinet Frame -->
+                            <path class="cabinet-frame" d="M100,100 h400 v300 h-400 z" 
+                                  fill="#2D3B55" stroke="#34495E" stroke-width="2"/>
+                            
+                            <!-- Server Units -->
+                            <g class="server-units">
+                                <!-- Server Unit 1 -->
+                                <g class="server-unit" transform="translate(110,120)">
+                                    <rect width="380" height="50" rx="5" fill="#1a73e8"/>
+                                    <!-- Server Details -->
+                                    <circle cx="20" cy="25" r="5" fill="#4CAF50"/>
+                                    <rect x="40" y="20" width="100" height="10" fill="#fff" opacity="0.3"/>
+                                    <!-- Ventilation -->
+                                    <g class="ventilation" transform="translate(160,15)">
+                                        <rect width="180" height="20" fill="#fff" opacity="0.1"/>
+                                        <path d="M0,0 h180" stroke="#fff" stroke-width="1" opacity="0.2" 
+                                              stroke-dasharray="5,5"/>
+                                    </g>
+                                </g>
 
-    this.canvas                     = document.createElement('canvas');
-    this.canvas.className           = "signature-canvas";
-    this.canvas.id                  = "signature-canvas-"+this.uuid;
+                                <!-- Server Unit 2 -->
+                                <g class="server-unit" transform="translate(110,180)">
+                                    <rect width="380" height="50" rx="5" fill="#34A853"/>
+                                    <circle cx="20" cy="25" r="5" fill="#4CAF50"/>
+                                    <rect x="40" y="20" width="100" height="10" fill="#fff" opacity="0.3"/>
+                                    <g class="ventilation" transform="translate(160,15)">
+                                        <rect width="180" height="20" fill="#fff" opacity="0.1"/>
+                                        <path d="M0,0 h180" stroke="#fff" stroke-width="1" opacity="0.2" 
+                                              stroke-dasharray="5,5"/>
+                                    </g>
+                                </g>
 
-    this.close_signature            = document.createElement('a');
-    var text_x                      = document.createTextNode(" x ");
-    var pad_close_icon              = document.createElement('span');
-    pad_close_icon.setAttribute("data-icon", "G");
+                                <!-- Server Unit 3 -->
+                                <g class="server-unit" transform="translate(110,240)">
+                                    <rect width="380" height="50" rx="5" fill="#FBBC05"/>
+                                    <circle cx="20" cy="25" r="5" fill="#4CAF50"/>
+                                    <rect x="40" y="20" width="100" height="10" fill="#fff" opacity="0.3"/>
+                                    <g class="ventilation" transform="translate(160,15)">
+                                        <rect width="180" height="20" fill="#fff" opacity="0.1"/>
+                                        <path d="M0,0 h180" stroke="#fff" stroke-width="1" opacity="0.2" 
+                                              stroke-dasharray="5,5"/>
+                                    </g>
+                                </g>
 
-    this.close_signature.className  = "signature-btn close-signature-btn";
-    this.close_signature.id         = "close-signature-btn-"+this.uuid;
-    this.close_signature.appendChild(text_x);
-    this.close_signature.appendChild(pad_close_icon); 
+                                <!-- Server Unit 4 -->
+                                <g class="server-unit" transform="translate(110,300)">
+                                    <rect width="380" height="50" rx="5" fill="#EA4335"/>
+                                    <circle cx="20" cy="25" r="5" fill="#4CAF50"/>
+                                    <rect x="40" y="20" width="100" height="10" fill="#fff" opacity="0.3"/>
+                                    <g class="ventilation" transform="translate(160,15)">
+                                        <rect width="180" height="20" fill="#fff" opacity="0.1"/>
+                                        <path d="M0,0 h180" stroke="#fff" stroke-width="1" opacity="0.2" 
+                                              stroke-dasharray="5,5"/>
+                                    </g>
+                                </g>
+                            </g>
 
-    this.clear_signature            = document.createElement('a');
-    var text_clear                  = document.createTextNode("Clear");
+                            <!-- Data Flow Animation -->
+                            <g class="data-flow">
+                                <!-- Animated data particles -->
+                                <circle class="data-particle" r="3" fill="#fff">
+                                    <animateMotion dur="3s" repeatCount="indefinite"
+                                        path="M110,140 C200,140 300,160 490,160"/>
+                                </circle>
+                                <circle class="data-particle" r="3" fill="#fff">
+                                    <animateMotion dur="2.5s" repeatCount="indefinite"
+                                        path="M110,200 C200,200 300,220 490,220"/>
+                                </circle>
+                                <circle class="data-particle" r="3" fill="#fff">
+                                    <animateMotion dur="3.5s" repeatCount="indefinite"
+                                        path="M110,260 C200,260 300,280 490,280"/>
+                                </circle>
+                            </g>
+                        </g>
 
-    this.clear_signature.className  = "signature-btn clear-signature-btn";
-    this.clear_signature.id         = "clear-signature-btn-"+this.uuid;
-    this.clear_signature.appendChild(text_clear);
+                        <!-- Glow Effects -->
+                        <defs>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    this.add_signature              = document.createElement('a');
-    var text_done                   = document.createTextNode("Done");
-    var pad_done_icon               = document.createElement('span');
-    pad_done_icon.setAttribute("data-icon", "A");
+    <!-- Pricing Plans -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2 class="text-center mb-5">Choose Your Perfect Plan</h2>
+            <!-- Add this HTML where you want the toggle to appear -->
+<div class="billing-toggle">
+    <span class="billing-option monthly">Billed Monthly</span>
+   <!--  <label class="switch">
+        <input type="checkbox" checked id="billingToggle">
+        <span class="slider"></span>
+    </label>
+   <span class="billing-option annually active">Billed Annually</span>-->
+</div>
 
-    this.add_signature.className    = "signature-btn add-signature-btn";
-    this.add_signature.id           = "add-signature-btn-"+this.uuid;
-    this.add_signature.appendChild(text_done);
-    this.add_signature.appendChild(pad_done_icon);
+            <div class="row">
+                <!-- Basic Plan -->
+                <div class="col-md-4">
+                    <div class="price-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 100 100" class="icon-pulse">
+                                <!-- Speed Icon -->
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#1a73e8" stroke-width="2"/>
+                                <path d="M50 20 L50 50 L70 70" stroke="#1a73e8" stroke-width="3" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="5" fill="#1a73e8"/>
+                            </svg>
+                        </div>
+                        <h3>Starter</h3>
+                        <div class="price">
+                           <span class="old-price">₹1,079</span>
+<span class="new-price">₹747</span>/Month
 
-    var clearer                     = document.createElement('div');
-    clearer.className               = "signature-clearer";
+                        </div>
+                        <ul class="features">
+                            <li>1 vCPU Cores</li>
+                            <li>2GB RAM</li>
+                            <li>60GB SSD Storage</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Select Plan</button>
+                    </div>
+                </div>
 
-    this.wrapper.appendChild(this.canvas);
-    this.wrapper.appendChild(this.close_signature);
-    this.wrapper.appendChild(this.clear_signature);
-    this.wrapper.appendChild(this.add_signature);
-    this.wrapper.appendChild(clearer);
+                <!-- Pro Plan -->
+                <div class="col-md-4">
+                    <div class="price-card featured">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 100 100" class="icon-pulse">
+                                <!-- Security Icon -->
+                                <path d="M50 20 L80 35 L80 65 L50 80 L20 65 L20 35 Z" fill="none" stroke="#34A853" stroke-width="2"/>
+                                <path d="M50 40 L60 50 L45 65" stroke="#34A853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Professional</h3>
+                       <div class="price">
+    <span class="old-price">₹2,324</span>
+    <span class="new-price">₹1,577</span>/Month
+</div>
 
-    return document.body.appendChild(this.overlay);
-  };
+                        <ul class="features">
+                            <li>2 vCPU Cores + Nav-Ation OS</li>
+                            <li>8GB RAM</li>
+                            <li>120GB SSD Storage</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Select Plan</button>
+                    </div>
+                </div>
 
-  SignaturePad.prototype._drawRotator = function() {
-    this.rotator                    = document.createElement('div');
-    // this.rotator.setAttribute("style", "display:none");
-    this.rotator.className          = "signature-rotator";
-    this.rotator.id                 = "signature-rotator-"+this.uuid;
+                <!-- Enterprise Plan -->
+                <div class="col-md-4">
+                    <div class="price-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 100 100" class="icon-pulse">
+                                <!-- Support Icon -->
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBC05" stroke-width="2"/>
+                                <circle cx="40" cy="40" r="5" fill="#FBBC05"/>
+                                <circle cx="60" cy="40" r="5" fill="#FBBC05"/>
+                                <path d="M35 60 Q50 70 65 60" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>Enterprise</h3>
+                        <div class="price">
+    <span class="old-price">₹2,988</span>
+    <span class="new-price">₹2,075</span>/Month
+</div>
 
-    var rotator_msg                 = document.createElement('div');
-    rotator_msg.className           = "signature-rotator-msg";
-    var text_rotate                 = document.createTextNode("Rotate 90\u00B0");
-    rotator_msg.appendChild(text_rotate);
+                        <ul class="features">
+                            <li>4 vCPU Cores</li>
+                            <li>8GB RAM</li>
+                            <li>240GB SSD Storage</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Select Plan</button>
+                    </div>
+                </div>
 
-    var rotator_icon                = document.createElement('div');
-    rotator_icon.className          = "signature-rotator-icon";
-    rotator_icon.setAttribute("data-icon", "L");
+                <!-- Additional 3 Plans -->
+                <!-- High Performance -->
+                <div class="col-md-4">
+                    <div class="price-card">
+                        <!-- Add highlight effect for featured plan -->
+                    <div class="price-highlight"></div>
+                    <!-- Existing pricing content -->
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 100 100" class="icon-pulse">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBC05" stroke-width="2"/>
+                            <path d="M30 70 L45 40 L55 60 L70 30" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="45" cy="40" r="4" fill="#FBBC05"/>
+                            <circle cx="55" cy="60" r="4" fill="#FBBC05"/>
+                        </svg>
+                    </div>
+                        <h3>High Performance</h3>
+                        <div class="price">
+    <span class="old-price">₹4,150</span>
+    <span class="new-price">₹2,905</span>/Month
+</div>
 
-    this.rotator_close              = document.createElement('div');
-    this.rotator_close.className    = "signature-rotator-close";
-    this.rotator_close.id           = "signature-rotator-close-"+this.uuid;
-    var text_x = document.createTextNode(" x ");
-    this.rotator_close.appendChild(text_x);
+                        <ul class="features">
+                            <li>4 vCPU Cores Nav-Ation OS + Nav-Ation AI</li>
+                            <li>16GB RAM</li>
+                            <li>240GB SSD Storage</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Select Plan</button>
+                        <!-- Add notification badge to special offers -->
+                    <!-- <div class="notification-badge">
+                        Special Offer
+                    </div> -->
+                    </div>
+                </div>
 
-    this.rotator.appendChild(rotator_msg);
-    this.rotator.appendChild(rotator_icon);
-    this.rotator.appendChild(this.rotator_close);
+                <!-- Elite -->
+                <div class="col-md-4">
+                    <div class="price-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 100 100" class="icon-pulse">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBC05" stroke-width="2"/>
+                                <path d="M50 25 L35 65 L65 65 Z" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M35 65 L65 65" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round"/>
+                                <circle cx="50" cy="45" r="4" fill="#FBBC05"/>
+                            </svg>
+                        </div>
+                        <h3>Elite</h3>
+                        <div class="price">
+                           <span class="old-price">₹9,379</span>
+<span class="new-price">₹6,557</span>/Month
 
-    return document.body.appendChild(this.rotator);
-  };
+                        </div>
+                        <ul class="features">
+                            <li>8 vCPU Cores + Nav-Ation OS</li>
+                            <li>32GB RAM</li>
+                            <li>480GB SSD Storage</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Select Plan</button>
+                    </div>
+                </div>
 
-  SignaturePad.prototype._drawCss = function() {
-    this.css = "@font-face{font-family:'Pictos Pad';src:url(data:font/truetype;charset=utf-8;base64,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) format('truetype');src:url(data:font/woff;charset=utf-8;base64,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) format('woff');font-weight:normal;font-style:normal}"+
-      ".signature-pad{position:relative;cursor:pointer;text-decoration:underline;background:rgba(253,253,0,0.1);width:200px;height:90px;border:2px dashed #cbd0d5;text-decoration:none}"+
-      ".signature-pad [data-icon]:after{font-family:'Pictos Pad'!important;content:attr(data-icon);padding-left:5px}"+
-      ".signature-pad .signature-pad-msg{position:absolute;color:#313440;font-family:sans-serif;font-size:14px;background:#eceef1;color:#313440;padding:0;filter:alpha(opacity=80);opacity:.80;top:0;right:0;text-align:center;padding:10px 35px 10px 10px}"+
-      ".signature-pad .signature-pad-msg span{line-height:100%;position:absolute;top:4px;right:5px;font-size:30px;height:29px}"+
-      ".signature-pad .signature-pad-img{position:absolute;top:0;left:0;width:100%;height:100%;border:none}"+
-      ".signature-rotator{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#dd4a38;z-index:1;text-align:center;font-family:sans-serif;z-index:99999999}"+
-      ".signature-rotator [data-icon]:after{font-family:'Pictos Pad'!important;content:attr(data-icon);padding-left:5px}"+
-      ".signature-rotator.signature-show{display:block}"+
-      ".signature-rotator div{position:absolute;left:60%;top:44%;width:100%;margin-left:-50%;text-align:center;font-size:100px;line-height:100%}"+
-      ".signature-rotator .signature-rotator-icon{top:37%;left:40%}"+
-      ".signature-rotator .signature-rotator-msg{font-size:40px;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-ms-transform:rotate(-90deg);-o-transform:rotate(-90deg);filter:progid:dximagetransform.microsoft.basicimage(rotation=3)}"+
-      ".signature-rotator .signature-rotator-close{font-size:50px;top:0;left:0;color:#9c3528;display:block;cursor:pointer;width:50px;margin-left:0;text-align:center}"+
-      ".signature-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#eceef1;z-index:88888888}"+
-      ".signature-overlay.signature-show{display:block}"+
-      ".signature-overlay .signature-clearer{clear:both}"+
-      ".signature-overlay .signature-powered-by{float:right;filter:alpha(opacity=80);opacity:.80;text-decoration:none;display:block}"+
-      ".signature-overlay .signature-powered-by text{text-decoration:none}"+
-      ".signature-overlay .signature-wrapper{display:block;position:relative;width:100%;max-width:580px;margin:0 auto;margin-top:120px;background:none}"+
-      ".signature-overlay .signature-wrapper.signature-iphone{margin-top:3px}"+
-      ".signature-overlay .signature-wrapper [data-icon]:after{font-family:'Pictos Pad'!important;content:attr(data-icon);padding-left:5px}"+
-      ".signature-overlay canvas{cursor:pointer;background:#fff;background:url(data:image/gif;base64,R0lGODlhRAIEAaIAAOHh4f///+bm5u/v7/j4+AAAAAAAAAAAACH5BAAHAP8ALAAAAABEAgQBAAP/SLHc/jDKSau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u/w8fLz9PX29/j5+vv8/f7/AAMKHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mix/6PHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CDCh1KtKjRo0iTKl3KtKnTp1CjSp1KtarVq1izat3KtavXr2DDih1LtqzZs2jTql3Ltq3bt3Djyp1Lt67du3jz6t3Lt6/fv4ADCx5MuLDhw4gTK17MuLHjx5AjS55MubLly5gza97MubPnz6BDix5NurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx9OvLjx48iTK1/OvLnz59CjS59Ovbr169izcxAAoLuCCALCD9CuZkB3AAIimEdPfg337uMdrBfwvT0aAufTN1gPgEB9+/9nvNcfAwS8Fx+AafBHnwLhCTDAfwiecV5/BTboX4TlnTfAfBBiKOGE3nnIBn8hirgGfhqayAaK8KmoRoET6ufihyB2OCMY4aHHIgA3ksFhAAIe2KMXPwag4JBfsFjfjv7ZiOQULApppIYXPnlFhQBIucCETloJxXsyypeiAyCW+UCZZpKJ5oRnrnlem27yqGacEMbp3X92UthAnlVuaWefAfCJp51wulnomoeimWiaexI6p6GPrlnnn4PSWambgAraqKWbQtopopEqGiqjDOQpw3wTsDmqqp+K2iqpfsa5KIizcnkpqK/SuqqtubJa6p+7vhlsd7UK26uxv8o6rJynxxK7bKaONstsspje6iq1ki5brLPSbjttrJ6+0GSX43YYLbbXgosrurAGeq666bqrbLfa1kvvvezqii+87Zpqb76+8qsvwMgKHLC84RpcMMLrKswtwQ87/C3D8frr5cUYZ6zxxhx37PHHIIcs8sgkl2zyySinrPLKLLfs8sswxyzzzDTXbPPNOOes88489+zzz0AHLfTQRBdt9NFIJ6300kw37fRcCQAAOw%3D%3D) no-repeat;background-size:100%;zoom:1;border:2px solid #cbd0d5;border-top:none;border-left:none}"+
-      ".signature-overlay canvas:active{cursor:crosshair}"+
-      ".signature-overlay .signature-btn{font-family:sans-serif;position:absolute;padding:9px;cursor:pointer;font-size:14px;text-align:center;background:#eceef1;color:#313440;-webkit-appearance:none;border:none;filter:alpha(opacity=50);opacity:.50;line-height:100%;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px}"+
-      ".signature-overlay .signature-btn:hover{text-decoration:none}"+
-      ".signature-overlay .signature-btn span{position:absolute;top:10.5px;right:5px;font-size:20px;filter:alpha(opacity=80);opacity:.80}"+
-      ".signature-overlay .signature-btn.close-signature-btn{top:5px;left:5px;padding:9px 14px 9px 14px;color:#eceef1}"+
-      ".signature-overlay .signature-btn.close-signature-btn span{color:#313440;right:10px}"+
-      ".signature-overlay .signature-btn.clear-signature-btn{top:5px;left:45px}"+
-      ".signature-overlay .signature-btn.add-signature-btn{top:10px;right:10px;padding-right:34px;border:2px solid #cbd0d5;border-top:1px solid #cbd0d5;border-left:1px solid #cbd0d5;text-transform:uppercase;filter:alpha(opacity=80);opacity:.80}"+
-      ".signature-overlay .signature-btn.add-signature-btn span{top:9px;font-size:30px}";
+                <!-- Ultimate -->
+                <div class="col-md-4">
+                    <div class="price-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 100 100" class="icon-pulse">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBC05" stroke-width="2"/>
+                                <path d="M35 60 L50 30 L65 60" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M40 45 L60 45" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round"/>
+                                <circle cx="50" cy="30" r="4" fill="#FBBC05"/>
+                            </svg>
+                        </div>
+                        <h3>Ultimate</h3>
+                       <div class="price">
+    <span class="old-price">₹15,438</span>
+    <span class="new-price">₹10,790</span>/Month
+</div>
 
-    var style   = document.createElement('style');
-    style.type  = 'text/css';
-    if (style.styleSheet) {
-      style.styleSheet.cssText = this.css;
-    } else {
-      style.appendChild(document.createTextNode(this.css));
+                        <ul class="features">
+                            <li>16 vCPU Cores + Nav-Ation OS + Nav-Ation AI</li>
+                            <li>64GB RAM</li>
+                            <li>960GB SSD Storage</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Custom Configuration -->
+   <section class="custom-config" id="custom">
+    <div class="container">
+        <div id="calculator-container">
+            <!-- Loading spinner (shown during initialization) -->
+            <div class="loading-spinner"></div>
+            
+            <!-- Calculator content (initially hidden) -->
+            <div class="calculator-content" style="display: none;">
+                <!-- Your existing calculator content -->
+            </div>
+        </div>
+        <!-- Black Friday Banner -->
+<div class="black-friday-banner">
+    <div class="sale-title">SALE ENDS IN:</div>
+    <div id="countdown" class="countdown-timer"></div>
+</div>
+
+<!-- Existing title -->
+<div class="text-center mb-5">
+    <h2>Build Your Power Cloud Server and Operating System</h2>
+    <p><i>With Enhanced Performance</i></p>
+</div>
+
+        
+        
+
+    <!-- ... rest of your configurator code ... -->
+
+        <div class="row g-4">
+            <!-- Configuration Panel -->
+            <div class="col-lg-8">
+                <div class="config-panel">
+                    <!-- CPU Configuration -->
+                    <div class="config-item">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-microchip text-primary me-2"></i>
+                                <h4 class="mb-0">Power vCPU Cores</h4>
+                            </div>
+                            <div class="current-value">10 Cores</div>
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <input type="range" class="custom-slider" id="cpuRange" min="1" max="60" value="10">
+                            </div>
+                            <div class="slider-labels">
+                                <span>1 Core</span>
+                                <span>30 Cores</span>
+                                <span>60 Cores</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RAM Configuration -->
+                    <div class="config-item mt-5">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-memory text-primary me-2"></i>
+                                <h4 class="mb-0">Power RAM Memory</h4>
+                            </div>
+                            <div class="current-value">130GB</div>
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <input type="range" class="custom-slider" id="ramRange" min="2" max="230" value="130">
+                            </div>
+                            <div class="slider-labels">
+                                <span>2GB</span>
+                                <span>16GB</span>
+                                <span>32GB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Storage Configuration -->
+                    <div class="config-item mt-5">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-hdd text-primary me-2"></i>
+                                <h4 class="mb-0">Premium SSD Storage</h4>
+                            </div>
+                            <div class="current-value">1.01TB</div>
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <input type="range" class="custom-slider" id="storageRange" min="20" max="2000" value="1010">
+                            </div>
+                            <div class="slider-labels">
+                                <span>20GB</span>
+                                <span>1TB</span>
+                                <span>2TB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Summary Panel -->
+          <div class="col-lg-4">
+    <div class="price-panel">
+        <div class="price-header">
+            <h3>Your Powerful Configuration</h3>
+        </div>
+        <div class="price-content">
+            <div class="price-item">
+                <div class="d-flex justify-content-between">
+                    <span><i class="fas fa-microchip me-2"></i>Power vCPU Cores</span>
+                    <span class="price">₹1,743.00</span> <!-- ₹21.00 × 83 -->
+                </div>
+            </div>
+            <div class="price-item">
+                <div class="d-flex justify-content-between">
+                    <span><i class="fas fa-memory me-2"></i>Power RAM</span>
+                    <span class="price">₹11,329.50</span> <!-- ₹136.50 × 83 -->
+                </div>
+            </div>
+            <div class="price-item">
+                <div class="d-flex justify-content-between">
+                    <span><i class="fas fa-hdd me-2"></i>Power Storage</span>
+                    <span class="price">₹5,868.10</span> <!-- ₹70.70 × 83 -->
+                </div>
+            </div>
+            <div class="discount-badge">
+                <i class="fas fa-tag me-2"></i>
+                Discount Applied: <strong>30% OFF</strong>
+            </div>
+            <div class="total-price">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Total Hourly Cost:</span>
+                    <span class="total-amount">₹18,940.60</span> <!-- ₹228.20 × 83 -->
+                </div>
+            </div>
+            <div class="text-center mb-3">
+                <h5>Calculated Hourly with Monthly Billing*</h5>
+                <p><i>(No up-front commitment)</i></p>
+            </div>
+            <button class="order-btn">
+                <i class="fas fa-shopping-cart me-2"></i>
+                Deploy Now
+            </button>
+            <div class="mt-2">
+                <p>*Storage will be calculated monthly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>
+
+
+    <!-- FAQs Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+            <div class="accordion" id="faqAccordion">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            How long will the sale last?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Our  sale runs from April 24th to August 30th but extended till 10th December this Year. Don't miss out on these incredible savings!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                
+                <!-- Continuing from FAQ Item 2 -->
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    What operating systems do you support?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    We support all major operating systems including Ubuntu, CentOS, Windows Server, Debian, and custom ISO installations. All OS installations are free of charge.
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        What is your uptime guarantee?
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        We guarantee 99.9% uptime for all our servers. In case of any downtime beyond this, we provide compensation as per our SLA.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                        Do you offer 24/7 support?
+                    </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, we provide 24/7 technical support through live chat, email, and WhatsApp. Our average response time is under 5 minutes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                        Can I upgrade my plan later?
+                    </button>
+                </h2>
+                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, you can upgrade your plan at any time. The pricing will be adjusted automatically on your next billing cycle.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 6 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                        What payment methods do you accept?
+                    </button>
+                </h2>
+                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        We accept all major credit cards, PayPal, and bank transfers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <!-- Company Info -->
+            <div class="col-md-4 mb-4">
+                <h5>About SS-Cloud</h5>
+                <p>Leading provider of cloud OS and Server infrastructure solutions with over a decade of experience in hosting and cloud services.</p>
+                <div class="social-links mt-3">
+                   
+                    <a target="_blank" href="" class="me-3"><i class="fab fa-twitter"></i></a>
+                    <a target="_blank" href="" class="me-3"><i class="fab fa-linkedin"></i></a>
+                   
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#pricing">Pricing Plans</a></li>
+                    <li><a href="#custom">Custom Configuration</a></li>
+                    <li><a href="#faq">FAQs</a></li>
+                    <li><a target="_blank" href="">Terms of Service</a></li>
+                    <li><a target="_blank" href="">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-md-4 mb-4">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone me-2"></i> 24/7 Support: +91 78768-21174</li>
+                    <li><i class="fas fa-envelope me-2"></i> sugamkaistha12@gmail.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i> Nagrota Bagwan, Dist. Kangra, India 176047</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <hr class="bg-light">
+                <p class="mb-0">&copy; 2026 
+                    <a target="_blank" class="navbar-brand" href="https://kaisthagroup.carrd.co/">
+                        <i class="fas fa-cloud"></i> KaisthaGroups & Nav Ation.
+                    </a> All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript Files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="script.js"></script>
+<!-- Add these just before closing body tag -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+    // Global function declarations
+function showOfflineMessage() {
+    // Implement offline message display
+    console.warn('You are currently offline');
+}
+
+function validateForm() {
+    // Implement form validation logic
+    const form = document.getElementById('orderForm');
+    if (!form) return false;
+    // Add your validation logic here
+    return true;
+}
+
+function showLoading() {
+    const loadingElement = document.querySelector('.loading');
+    if (loadingElement) {
+        loadingElement.style.display = 'block';
     }
-    return document.body.appendChild(style);
-  };
-
-}(SignaturePad));
+}
 
 
-(function(SignaturePad){
-  var self;
-  var CLICK             = "click";
-  var TOUCH_SUPPORTED   = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) ? true : false;
-  if (!!TOUCH_SUPPORTED) {
-    CLICK               = "touchend";
-  }
 
-  SignaturePad.prototype.events = function() {
-    self = this;
 
-    this.pad.addEventListener(CLICK, this.show, false);
-    this.add_signature.addEventListener(CLICK, this.saveSignature, false);
-    this.close_signature.addEventListener(CLICK, this.hide, false);
-    this.clear_signature.addEventListener(CLICK, this.clear, false);
-    this.wrapper.addEventListener(CLICK, function(e) { e.stopPropagation(); }, false);
-    this.rotator_close.addEventListener(CLICK, this.hideRotatorAndPad, false);
-    this.rotator_close.addEventListener(CLICK, this.hideRotatorAndPad, false);
-    window.onresize = function(e) { self.showOrHideRotator(e); };
-  };
+function createParticles() {
+    const particlesArea = document.querySelector('.particles-area');
+    if (!particlesArea) return;
 
-  SignaturePad.prototype.saveSignature = function(e) {
-    var data_url = self.canvas.toDataURL("png");
-    self.trigger("signature_pad.data_url", data_url);
-    //self.FireEvent("signature_pad:data_url", self.script, data_url);
-    self.hide(e);
-    self.pad_img.src = data_url;
-  };
-
-  SignaturePad.prototype.show = function(e){
-    if (e) { e.preventDefault(); }
-
-    self.overlay.className += " signature-show";
-
-    self.showOrHideRotator();
-  };
-
-  SignaturePad.prototype.hide = function(e){
-    if (e) { e.preventDefault(); }
-
-    self.overlay.className = "signature-overlay";
-  };
-
-  SignaturePad.prototype.clear = function(e) {
-    if (e) { e.preventDefault(); }
-
-    var context = self.canvas.getContext("2d");
-    context.clearRect(0, 0, self.canvas.width, self.canvas.height);
-  };
-
-  SignaturePad.prototype.showOrHideRotator = function(e) {
-    if (e) { e.preventDefault(); }
-
-    if (!self.StandardScreen() && self.visible()) {
-      var mql = window.matchMedia("(orientation: portrait)");
-      if(mql.matches) {
-        self.showRotator();
-      } else {
-        self.hideRotator();
-      }
-    } else {
-      self.hideRotator();
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        
+        const size = Math.random() * 4 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 10;
+        particle.style.animation = `particleFloat ${duration}s ${delay}s infinite linear`;
+        
+        particlesArea.appendChild(particle);
     }
-  };
+}
 
-  SignaturePad.prototype.visible = function(e){
-    if (e) { e.preventDefault(); }
+function initializeCalculator() {
+    const container = document.getElementById('calculator-container');
+    if (!container) return;
 
-    return self.overlay.className.indexOf("signature-show") > 0;
-  };
-
-  SignaturePad.prototype.showRotator = function(e){
-    if (e) { e.preventDefault(); }
-
-    if (self.visible()) {
-      self.rotator.className += " signature-show";
+    const spinner = container.querySelector('.loading-spinner');
+    const content = container.querySelector('.calculator-content');
+    
+    if (spinner && content) {
+        setTimeout(() => {
+            spinner.style.display = 'none';
+            content.style.display = 'block';
+        }, 1000);
     }
-  };
+}
 
-  SignaturePad.prototype.hideRotator = function(e){
-    if (e) { e.preventDefault(); }
-
-    self.rotator.className = "signature-rotator";
-  };
-
-  SignaturePad.prototype.hideRotatorAndPad = function(e) {
-    if (e) { e.preventDefault(); }
-
-    self.hide();
-    self.hideRotator();
-  };
-}(SignaturePad));
-
-
-(function(SignaturePad){  
-  SignaturePad.prototype.Uuid = function() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-      var r, v;
-      r = Math.random() * 16 | 0;
-      v = (c === "x" ? r : r & 0x3 | 0x8);
-      return v.toString(16);
+// Slider functionality
+// Slider functionality
+function initializeSliders() {
+    const sliders = document.querySelectorAll('.custom-slider');
+    
+    sliders.forEach(slider => {
+        // Initial update
+        updateSliderDisplay(slider);
+        
+        // Add event listeners
+        slider.addEventListener('input', function() {
+            updateSliderDisplay(this);
+            updatePrices();
+        });
     });
-  };
+}
 
-  SignaturePad.prototype.CurrentlyExecutedScript = function() {
-    var script;
+function updateSliderDisplay(slider) {
+    const configItem = slider.closest('.config-item');
+    if (!configItem) return;
 
-    if (document) {
-      var scripts = document.getElementsByTagName('script');
-      script      = scripts[scripts.length - 1];
+    const valueDisplay = configItem.querySelector('.current-value');
+    if (!valueDisplay) return;
+
+    const value = parseInt(slider.value);
+    let displayText;
+
+    // Determine display text based on slider ID
+    switch(slider.id) {
+        case 'cpuRange':
+            displayText = `${value} ${value === 1 ? 'Core' : 'Cores'}`;
+            break;
+        case 'ramRange':
+            displayText = `${value}GB`;
+            break;
+        case 'storageRange':
+            displayText = value >= 1000 ? 
+                `${(value/1000).toFixed(2)}TB` : 
+                `${value}GB`;
+            break;
+        default:
+            displayText = value;
     }
-    return script;
-  };
 
-  SignaturePad.prototype.InsertAfter = function(reference_node, new_node) {
-    return reference_node.parentNode.insertBefore(new_node, reference_node.nextSibling);
-  };
-  
-  SignaturePad.prototype.StandardScreen = function() {
-    return document.body.clientWidth >= 580;
-  };
+    valueDisplay.textContent = displayText;
 
-  SignaturePad.prototype.FireEvent = function(name, target, data) {
-    //Create a generic event
-    var bubbles     = true;
-    var cancelable  = true;
-    var event       = document.createEvent("Events");
-    //Initialize it to be the event we want
-    event.initEvent(name, bubbles, cancelable);
-    event.data = data;
-    //FIRE!
-    target.dispatchEvent(event);
-  };
+    // Update slider track fill
+    const track = slider.closest('.slider-track');
+    if (track) {
+        const percentage = ((value - slider.min) / (slider.max - slider.min)) * 100;
+        track.style.setProperty('--track-fill', `${percentage}%`);
+    }
+}
+
+function updatePrices() {
+    const cpuValue = parseInt(document.getElementById('cpuRange')?.value || 0);
+    const ramValue = parseInt(document.getElementById('ramRange')?.value || 0);
+    const storageValue = parseInt(document.getElementById('storageRange')?.value || 0);
+
+    // Calculate costs with 30% discount
+    const cpuCost = (cpuValue * 0.0169).toFixed(4);
+    const ramCost = (ramValue * 0.00286).toFixed(4);
+    const storageCost = (storageValue * 0.00014444).toFixed(8);
+    const total = (parseFloat(cpuCost) + parseFloat(ramCost) + parseFloat(storageCost)).toFixed(8);
+
+    // Update price displays
+    const priceElements = {
+        cpu: document.querySelector('.price-item:nth-child(1) .price'),
+        ram: document.querySelector('.price-item:nth-child(2) .price'),
+        storage: document.querySelector('.price-item:nth-child(3) .price'),
+        total: document.querySelector('.total-amount')
+    };
+
+    const cpuDisplayText = `${cpuValue} ${cpuValue === 1 ? 'Core' : 'Cores'}`;
+    const ramDisplayText = `${ramValue}GB`;
+    const storageDisplayText = storageValue >= 1000 ? `${(storageValue/1000).toFixed(2)}TB` : `${storageValue}GB`;
+
+    if (priceElements.cpu) priceElements.cpu.textContent = cpuDisplayText;
+    if (priceElements.ram) priceElements.ram.textContent = ramDisplayText;
+    if (priceElements.storage) priceElements.storage.textContent = storageDisplayText;
+    if (priceElements.total) priceElements.total.textContent = `$${total}`;
+}
+
+function updateSliderValue(type, value, display) {
+    if (!display) return;
+    
+    let displayValue = value;
+    if (type === 'storage' && value >= 1000) {
+        displayValue = `${(value/1000).toFixed(2)}TB`;
+    } else {
+        displayValue = `${value}${type === 'cpu' ? ' Cores' : 'GB'}`;
+    }
+    display.textContent = displayValue;
+}
 
 
-}(SignaturePad));
+function updatePriceDisplay(type, value) {
+    const selector = type === 'total' ? '.total-amount' : `.price-item[data-type="${type}"] .price`;
+    const element = document.querySelector(selector);
+    if (element) {
+        element.textContent = `$${value}`;
+    }
+}
 
-var signature_pad = SignaturePad();
+function initializeTypingAnimation() {
+    const typingText = document.querySelector('.typing-text');
+    if (!typingText) return;
+
+    const texts = ['Scalable', 'Secure', 'Reliable'];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+        const currentText = texts[textIndex];
+        
+        if (isDeleting) {
+            typingText.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingText.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 100 : 200;
+
+        if (!isDeleting && charIndex === currentText.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    type();
+}
+
+
+
+
+
+function initializeCountdown() {
+    const countdownElement = document.getElementById('countdown');
+    if (!countdownElement) return;
+
+    function updateCountdown() {
+        try {
+            const endDate = new Date('2024-12-10T23:59:59').getTime();
+            const now = new Date().getTime();
+            const diff = endDate - now;
+            
+            // Using template literals for better number formatting
+            const formatNumber = (num) => num < 10 ? `0${num}` : num;
+            
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                countdownElement.innerHTML = `
+    <div class="countdown-block">
+        <span class="countdown-number">${formatNumber(days)}</span>
+        <span class="countdown-label">DAYS</span>
+    </div>
+    <div class="countdown-block">
+        <span class="countdown-number">${formatNumber(hours)}</span>
+        <span class="countdown-label">HOURS</span>
+    </div>
+    <div class="countdown-block">
+        <span class="countdown-number">${formatNumber(minutes)}</span>
+        <span class="countdown-label">MINUTES</span>
+    </div>
+    <div class="countdown-block">
+        <span class="countdown-number">${formatNumber(seconds)}</span>
+        <span class="countdown-label">SECONDS</span>
+    </div>
+`;
+
+            } else {
+                countdownElement.innerHTML = '<div class="sale-ended">Sale Ended</div>';
+            }
+        } catch (error) {
+            console.error('Error updating countdown:', error);
+        }
+    }
+
+    // Initial call
+    updateCountdown();
+    
+    // Update every second (1000ms)
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    
+    // Cleanup function to clear interval
+    return () => clearInterval(countdownInterval);
+}
+
+
+
+// Initialize everything when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize particles
+    if (document.getElementById('particles-js')) {
+        try {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": {"value": 80},
+                    "color": {"value": "#ffffff"},
+                    "shape": {"type": "circle"},
+                    "opacity": {"value": 0.5},
+                    "size": {"value": 3},
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {"enable": true, "speed": 6}
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {"enable": true, "mode": "repulse"},
+                        "onclick": {"enable": true, "mode": "push"},
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+        } catch(error) {
+            console.error("Error initializing particles:", error);
+        }
+    }
+
+    // Initialize calculator and other components
+    createParticles();
+    initializeCalculator();
+    
+    // Set up form handling
+    const orderForm = document.getElementById('orderForm');
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm()) {
+                showLoading();
+                // Handle form submission
+            }
+        });
+    }
+
+    // Initialize typing animation
+    const typingText = document.querySelector('.typing-text');
+    if (typingText) {
+        initializeTypingAnimation(typingText);
+    }
+
+    initializeSliders();
+    updatePrices(); // Initial price calculation
+    initializeTypingAnimation();
+    initializeCountdown();
+
+    const billingToggle = document.getElementById('billingToggle');
+    const priceElements = document.querySelectorAll('.price span');
+
+    // Store the original (annual) prices
+    const annualPrices = Array.from(priceElements).map(el => el.textContent);
+    
+    // Store the monthly prices (assuming they're 1/10th of annual for this example)
+    const monthlyPrices = annualPrices.map(price => {
+        const numericValue = parseInt(price.replace(/[^0-9]/g, ''));
+        const monthlyValue = Math.round(numericValue * 1.4); // Add 40%
+        return `$${monthlyValue}`;
+    });
+
+    billingToggle.addEventListener('change', function() {
+        priceElements.forEach((element, index) => {
+            element.textContent = this.checked ? annualPrices[index] : monthlyPrices[index];
+        });
+    });
+
+});
+
+// Global error handling
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error('Error:', msg, 'URL:', url, 'Line:', lineNo);
+    return false;
+};
+
+// Network error handling
+window.addEventListener('offline', showOfflineMessage);
+
+document.documentElement.style.setProperty('--track-fill', '50%');
 </script>
 </body>
 </html>
